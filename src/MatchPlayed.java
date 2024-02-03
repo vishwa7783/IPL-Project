@@ -5,7 +5,7 @@ import java.util.Map;
 public class MatchPlayed {
 
       public void printMatchPlayed()throws IOException {
-          String filePath="src/matches.csv";
+          String filePath="src/CSVFiles/matches.csv";
           FetchData data=new FetchData();
           Map<Integer,HashMap<String,String>> matchesData=data.getData(filePath);
           int countMatch=0;
@@ -14,7 +14,7 @@ public class MatchPlayed {
               HashMap<String,String>fields=matchData.getValue();
               for(Map.Entry<String,String> iterator:fields.entrySet()){
                   if(iterator.getKey().equals("season")) {
-                      if (prevYear.equals("")) {
+                      if (prevYear.isEmpty()) {
                           prevYear = iterator.getValue();
                           countMatch++;
                       } else if (prevYear.equals(iterator.getValue())){

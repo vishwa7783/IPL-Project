@@ -12,8 +12,8 @@ public class Main {
         FetchData data=new FetchData();
         String matchFilePath="src/CSVFiles/matches.csv";
 
-        Map<Integer,HashMap<String,String>> matchesData=data.getData(matchFilePath);
-        Map<Integer,HashMap<String,String>> deliveriesData=data.getData(deliveriesPath);
+//        Map<Integer,HashMap<String,String>> matchesData=data.getData(matchFilePath);
+//        Map<Integer,HashMap<String,String>> deliveriesData=data.getData(deliveriesPath);
 
 
 
@@ -32,8 +32,11 @@ public class Main {
 
 
 //        MatchPlayed matchPlayed=new MatchPlayed();
-//        matchPlayed.print();
+//        matchPlayed.printMatchPlayed();
 
+        MatchWon matchWon=new MatchWon();
+        matchWon.countMatchWon();
+        matchWon.printMatchWon();
 
 
     }

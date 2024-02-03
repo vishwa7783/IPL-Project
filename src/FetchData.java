@@ -3,7 +3,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 public class FetchData {
-    Map<Integer,HashMap<String,String>> getData(String csvFilePath) throws IOException{
+    Map<Integer,HashMap<String,String>> getData(String csvFilePath) {
         Map<Integer,HashMap<String,String>> dataSheet=new HashMap<>();
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(csvFilePath))) {
             String line;
