@@ -3,11 +3,7 @@ import java.util.Map;
 
 public class MatchWon {
     private final HashMap<String,Integer>winnerTeams=new HashMap<>();
-   public void countMatchWon()  {
-       String filePath="src/CSVFiles/matches.csv";
-       FetchData data=new FetchData();
-
-       Map<Integer, HashMap<String,String>> matchesData=data.getData(filePath);
+   public void countMatchWon(Map<Integer, HashMap<String,String>> matchesData)  {
        for(Map.Entry<Integer,HashMap<String,String>>matchData:matchesData.entrySet()){
            HashMap<String,String> fields=matchData.getValue();
            if(fields.containsKey("winner")) {
