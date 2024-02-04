@@ -43,6 +43,10 @@ public class Main {
 //        extraRun.setExtraRun("2016",deliveriesData,matchesData);
 //        extraRun.printTeamsExtraRun();
 
+        EconomicalBowlers economicalBowlers=new EconomicalBowlers();
+        economicalBowlers.setEconomy("2015",deliveriesData,matchesData);
+        economicalBowlers.setEconomyBowlers();
+        economicalBowlers.printEconomyBowlers();
 
 
     }

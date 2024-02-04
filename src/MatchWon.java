@@ -6,11 +6,12 @@ public class MatchWon {
    public void countMatchWon(Map<Integer, HashMap<String,String>> matchesData)  {
        for(Map.Entry<Integer,HashMap<String,String>>matchData:matchesData.entrySet()){
            HashMap<String,String> fields=matchData.getValue();
+           String winnerTeam=fields.get("winner");
            if(fields.containsKey("winner")) {
-               if(winnerTeams.containsKey(fields.get("winner"))  ) {
-                   winnerTeams.put(fields.get("winner"), winnerTeams.get(fields.get("winner")) + 1);
-               }else if(!fields.get("winner").isEmpty()){
-                   winnerTeams.put(fields.get("winner"), 1);
+               if(winnerTeams.containsKey(winnerTeam)  ) {
+                   winnerTeams.put(winnerTeam, winnerTeams.get(winnerTeam) + 1);
+               }else if(!winnerTeam.isEmpty()){
+                   winnerTeams.put(winnerTeam, 1);
                }
            }
        }
