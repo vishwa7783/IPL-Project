@@ -33,11 +33,11 @@ public class Main {
 
     public static void main(String[] args) {
         List<Match> matchesData=getMatchesData();
-        List<Match> deliveriesData=getDeliveryData();
-for(Match m:matchesData){
-    System.out.println(m.getVenue());
-}
+//        List<Match> deliveriesData=getDeliveryData();
+
         findNumberOfMatchPlayedPerYear(matchesData);
+        findNumberOfMatchWonByTeams(matchesData);
+
 
     }
 
@@ -77,8 +77,8 @@ for(Match m:matchesData){
         return matches;
     }
 
-    public static List<Match> getDeliveryData() {
-        List<Match> deliveries = new ArrayList<>();
+//    public static List<Match> getDeliveryData() {
+//        List<Match> deliveries = new ArrayList<>();
 //        try{
 //            BufferedReader bufferedReader=new BufferedReader(new FileReader(MATCH_FILE_PATH));
 //            String line = bufferedReader.readLine();
@@ -89,8 +89,8 @@ for(Match m:matchesData){
 //        }catch(IOException e){
 //                e.printStackTrace();
 //        }
-        return deliveries;
-    }
+//        return deliveries;
+//    }
 
     private static void findNumberOfMatchPlayedPerYear(List<Match> matchesData) {
         HashMap<Integer,Integer> matchesPlayedPerYear = new HashMap<>();
@@ -104,6 +104,21 @@ for(Match m:matchesData){
 
         for(Map.Entry<Integer,Integer>matchPlayedPerYear:matchesPlayedPerYear.entrySet()){
             System.out.println(matchPlayedPerYear.getKey()+" :- "+matchPlayedPerYear.getValue());
+        }
+    }
+
+    private static void findNumberOfMatchWonByTeams(List<Match> matchesData) {
+        HashMap<String,Integer> matchesWonByTeam = new HashMap<>();
+        for(Match match : matchesData){
+            if(matchesWonByTeam.containsKey(match.getWinner())){
+                matchesWonByTeam.put(match.getWinner(),matchesWonByTeam.get(match.getWinner())+1);
+            }else if(!match.getWinner().isEmpty()){
+                matchesWonByTeam.put(match.getWinner(),1);
+            }
+        }
+
+        for(Map.Entry<String,Integer> matchWonByTeam : matchesWonByTeam.entrySet()){
+            System.out.println(matchWonByTeam.getKey()+" :- "+matchWonByTeam.getValue());
         }
     }
 }
