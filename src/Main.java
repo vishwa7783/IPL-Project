@@ -43,10 +43,15 @@ public class Main {
 //        extraRun.setExtraRun("2016",deliveriesData,matchesData);
 //        extraRun.printTeamsExtraRun();
 
-        EconomicalBowlers economicalBowlers=new EconomicalBowlers();
-        economicalBowlers.setEconomy("2015",deliveriesData,matchesData);
-        economicalBowlers.setEconomyBowlers();
-        economicalBowlers.printEconomyBowlers();
+//        EconomicalBowlers economicalBowlers=new EconomicalBowlers();
+//        economicalBowlers.setEconomy("2015",deliveriesData,matchesData);
+//        economicalBowlers.setEconomyBowlers();
+//        economicalBowlers.printEconomyBowlers();
+
+
+        PurpleCapHolder purpleCapHolder=new PurpleCapHolder();
+        purpleCapHolder.setPlayerDismissal("2016",deliveriesData,matchesData);
+        purpleCapHolder.printPurpleCapHolder("2016");
 
 
     }
