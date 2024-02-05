@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class Main {
     private static final String MATCH_FILE_PATH = "src/io/mountblue/ipl/archive/matches.csv";
-    private static final String DELIVERY_FILE_PATH = "src/CSVFiles/archive/deliveries.csv";
+    private static final String DELIVERY_FILE_PATH = "src/io/mountblue/ipl/archive/deliveries.csv";
     public static final int MATCH_ID = 0;
     public static final int SEASON = 1;
     public static final int CITY = 2;
@@ -33,7 +33,7 @@ public class Main {
 
     public static void main(String[] args) {
         List<Match> matchesData=getMatchesData();
-//        List<Match> deliveriesData=getDeliveryData();
+        List<Delivery> deliveriesData=getDeliveryData();
 
         findNumberOfMatchPlayedPerYear(matchesData);
         findNumberOfMatchWonByTeams(matchesData);
@@ -77,20 +77,43 @@ public class Main {
         return matches;
     }
 
-//    public static List<Match> getDeliveryData() {
-//        List<Match> deliveries = new ArrayList<>();
-//        try{
-//            BufferedReader bufferedReader=new BufferedReader(new FileReader(MATCH_FILE_PATH));
-//            String line = bufferedReader.readLine();
-//            while ((line = bufferedReader.readLine()) != null) {
-//                String[] data = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
-//
-//            }
-//        }catch(IOException e){
-//                e.printStackTrace();
-//        }
-//        return deliveries;
-//    }
+    public static List<Delivery> getDeliveryData() {
+        List<Delivery> deliveries = new ArrayList<>();
+        try{
+            BufferedReader bufferedReader=new BufferedReader(new FileReader(DELIVERY_FILE_PATH));
+            String line = bufferedReader.readLine();
+            while ((line = bufferedReader.readLine()) != null) {
+                String[] data = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
+                Delivery delivery = new Delivery();
+                delivery.setMatchId(Integer.parseInt(data[MATCH_ID]));
+                delivery.setInning(Integer.parseInt(data[1]));
+                delivery.setBattingTeam(data[2]);
+                delivery.setBowlingTeam(data[3]);
+                delivery.setOver(Integer.parseInt(data[4]));
+                delivery.setBall(Integer.parseInt(data[5]));
+                delivery.setBatsman(data[6]);
+                delivery.setNonStriker(data[7]);
+                delivery.setBowler(data[8]);
+                delivery.setInning(Integer.parseInt(data[9]));
+                delivery.setWideRuns(Integer.parseInt(data[10]));
+                delivery.setByeRuns(Integer.parseInt(data[11]));
+                delivery.setLegByeRuns(Integer.parseInt(data[12]));
+                delivery.setNoBallRuns(Integer.parseInt(data[13]));
+                delivery.setPenaltyRuns(Integer.parseInt(data[14]));
+                delivery.setBatsmanRuns(Integer.parseInt(data[15]));
+                delivery.setExtraRuns(Integer.parseInt(data[16]));
+                delivery.setTotalRuns(Integer.parseInt(data[17]));
+                delivery.setPlayerDismissal(data[18]);
+                delivery.setDismissalType(data[19]);
+                delivery.setFielder(data[20]);
+
+                deliveries.add(delivery);
+            }
+        }catch(IOException e){
+                e.printStackTrace();
+        }
+        return deliveries;
+    }
 
     private static void findNumberOfMatchPlayedPerYear(List<Match> matchesData) {
         HashMap<Integer,Integer> matchesPlayedPerYear = new HashMap<>();
