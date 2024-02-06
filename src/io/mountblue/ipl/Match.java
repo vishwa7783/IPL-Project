@@ -7,7 +7,7 @@ public class Match {
     private String date = null;
     private String team1 = null;
     private String team2 = null;
-    private String tossWineer = null;
+    private String tossWinner = null;
     private String tossDecision = null;
     private String result = null;
     private int dlApplied = 0;
@@ -69,11 +69,11 @@ public class Match {
     }
 
     public String getTossWineer() {
-        return tossWineer;
+        return tossWinner;
     }
 
     public void setTossWineer(String tossWineer) {
-        this.tossWineer = tossWineer;
+        this.tossWinner = tossWineer;
     }
 
     public String getTossDecision() {

@@ -5,10 +5,9 @@ import io.mountblue.ipl.Match;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+
+import static java.util.Collections.sort;
 
 public class Main {
     private static final String MATCH_FILE_PATH = "src/io/mountblue/ipl/archive/matches.csv";
@@ -58,13 +57,63 @@ public class Main {
         findNumberOfMatchPlayedPerYear(matchesData);
         findNumberOfMatchWonByTeams(matchesData);
         findExtraRunsConcededPerTeamIn2016(deliveriesData, matchesData);
-//        findTopEconomicalBowlersOf2015(deliveriesData, matchesData);
-
+        findTopEconomicalBowlersOf2015(deliveriesData, matchesData);
     }
 
-//    private static void findTopEconomicalBowlersOf2015(List<Delivery> deliveriesData, List<Match> matchesData) {
-//        int[] matchIds = getMatchIds(matchesData,2015);
-//    }
+    private static void findTopEconomicalBowlersOf2015(List<Delivery> deliveriesData, List<Match> matchesData) {
+        int[] matchIds = getMatchIds(matchesData,2015);
+        HashMap<String,Integer> runsConcededByBowlers = new HashMap<>();
+        HashMap<String,Integer> validBallsThrownByBowlers = new HashMap<>();
+        HashMap<String,Float> economyOfBowlers = new HashMap<>();
+
+        for(Delivery deliveryData : deliveriesData){
+            if(deliveryData.getMatchId()>=matchIds[0] && deliveryData.getMatchId()<=matchIds[1]){
+                int balls=1;
+                int runs=deliveryData.getBatsmanRuns();
+                if(deliveryData.getWideRuns()!=0 || deliveryData.getNoBallRuns()!=0){
+                    runs+=deliveryData.getWideRuns()+deliveryData.getNoBallRuns();
+                    balls--;
+                }
+                if(deliveryData.getIsSuperOver()==1){
+                    runs=0;
+                    balls=0;
+                }
+
+                if(runsConcededByBowlers.containsKey(deliveryData.getBowler())){
+                    runsConcededByBowlers.put(deliveryData.getBowler(),runsConcededByBowlers.get(deliveryData.getBowler())+runs);
+                    validBallsThrownByBowlers.put(deliveryData.getBowler(),validBallsThrownByBowlers.get(deliveryData.getBowler())+balls);
+                }else{
+                    runsConcededByBowlers.put(deliveryData.getBowler(),runs);
+                    validBallsThrownByBowlers.put(deliveryData.getBowler(),balls);
+                }
+            }
+        }
+
+        for(Map.Entry<String,Integer> runsConcededByBowler : runsConcededByBowlers.entrySet()){
+            float economy=(float)(runsConcededByBowler.getValue())*6/validBallsThrownByBowlers.get(runsConcededByBowler.getKey());
+            economyOfBowlers.put(runsConcededByBowler.getKey(),economy);
+        }
+
+        List<Map.Entry<String,Float>> listOfEconomyOfBowlers = new ArrayList<>(economyOfBowlers.entrySet());
+        listOfEconomyOfBowlers.sort(new Comparator<Map.Entry<String, Float>>() {
+            @Override
+            public int compare(Map.Entry<String, Float> economyOfBowlers1, Map.Entry<String, Float> economyOfBowlers2) {
+                return economyOfBowlers1.getValue().compareTo(economyOfBowlers2.getValue());
+            }
+        });
+
+        int i=0;
+        for(Map.Entry<String,Float> listOfEconomyOfBowler: listOfEconomyOfBowlers){
+            if(i<10){
+                System.out.println(listOfEconomyOfBowler.getKey()+" :- "+listOfEconomyOfBowler.getValue());
+                i++;
+            }
+           else {
+                break;
+            }
+        }
+        System.out.println();
+    }
 
     private static void findExtraRunsConcededPerTeamIn2016(List<Delivery> deliveriesData, List<Match> matchesData) {
         HashMap<String,Integer> extraRunsConcededByTeams = new HashMap<>();
@@ -93,7 +142,10 @@ public class Main {
                 matchIds[0]=match.getMatchId();
                 matchIds[1]= match.getMatchId();
             }
-            matchIds[1]= match.getMatchId();
+            else if(match.getSeason()==year){
+                matchIds[1] = match.getMatchId();
+            }
+
         }
         return matchIds;
     }
@@ -140,7 +192,7 @@ public class Main {
             BufferedReader bufferedReader=new BufferedReader(new FileReader(DELIVERY_FILE_PATH));
             String line = bufferedReader.readLine();
             while ((line = bufferedReader.readLine()) != null) {
-                String[] data = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
+                String[] data = line.split(",", -1);
                 Delivery delivery = new Delivery();
                 delivery.setMatchId(Integer.parseInt(data[MATCH_ID]));
                 delivery.setInning(Integer.parseInt(data[INNING]));
